@@ -1,0 +1,15 @@
+fastapi
+uvicorn
+motor
+pydantic[email]
+pymongo
+pydantic_core
+pyjwt
+pytest
+httpx
+pytest-asyncio
+pytest-mock
+mongomock
+pytest-mock-resources
+python-on-whales
+asgi-lifespan
