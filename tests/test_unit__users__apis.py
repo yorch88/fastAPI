@@ -9,6 +9,12 @@ test_user = {
     "email": "test@example.com"
 }
 
+test_product =  {
+    "name": "Banana",
+    "category": "Fruit",
+    "qty": 2
+}
+
 # Mock the MongoDB client
 @pytest.fixture
 def mock_db():
@@ -91,3 +97,25 @@ async def test_create_user_with_missing_fields():
     # Assertions
     assert response.status_code == 422  # 422 Unprocessable Entity
     
+    
+# Test case for creating a new user
+@pytest.mark.asyncio
+async def test_create_product(mock_db):
+    # Mock the database collection and its methods
+    mock_collection = AsyncMock()
+    mock_db.__getitem__.return_value = mock_collection
+    mock_collection.find_one.return_value = None  # Simulate no existing user
+    mock_collection.insert_one.return_value.inserted_id = "12345"  # Simulate inserted ID
+
+    # Override the get_db dependency
+    app.dependency_overrides[get_db] = lambda: mock_db
+
+    # Create a test client
+    client = TestClient(app)
+
+    # Make the request
+    response = client.post("/proucts/", json=test_product)
+
+    # Assertions
+    assert response.status_code == 200
+    assert response.json() == {"id": "12345", "message": "Product created successfully"}

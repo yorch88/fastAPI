@@ -13,3 +13,5 @@ mongomock
 pytest-mock-resources
 python-on-whales
 asgi-lifespan
+slowapi
+redis
