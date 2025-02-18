@@ -15,3 +15,5 @@ python-on-whales
 asgi-lifespan
 slowapi
 redis
+elasticsearch
+pydantic-settings
